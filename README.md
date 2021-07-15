@@ -10,7 +10,7 @@ Initialize your project, and add the dependency:
 
     $ poetry init
     ...
-    $ poetry add git+https://github.com/deadwisdom/freezedry.git
+    $ poetry add git+https://github.com/deadwisdom/freezedry.git#main
   
 Create two files:
 
