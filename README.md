@@ -40,7 +40,8 @@ Add app settings to your `pyproject.toml` like:
 
 ## Extend
 
-You can extend the app by creating an `app.py` file, and overwriting like so:
+The `app` symbol from a local `app.py` will be preferred to the freezedry project one.
+So you can extend the app by creating an `app.py` file like so:
 
     import create_app from freezedry
 
@@ -49,4 +50,3 @@ You can extend the app by creating an `app.py` file, and overwriting like so:
     @app.route('/test')
     def test():
         return "Works"
-

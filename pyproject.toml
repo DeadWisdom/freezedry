@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "freezedry"
-version = "0.1.8"
+version = "0.1.9"
 description = "Super simple Flask frozen site generator."
 authors = ["Brantley Harris <deadwisdom@gmail.com>"]
 
