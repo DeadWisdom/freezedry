@@ -32,11 +32,16 @@ def create_app(add_routes: bool = True) -> Flask:
     # App
     app = Flask("app")
 
+    # Freezer
+    freezer = Freezer(app)
+    app.freezer = freezer
+
     # Config
     app.config.from_mapping(
         {
             "FLATPAGES_AUTO_RELOAD": True,
             "FLATPAGES_EXTENSION": ".md",
+            "FREEZER_IGNORE_MIMETYPE_WARNINGS": True,
         }
     )
     app.config.from_file("pyproject.toml", load=lambda x: toml.load(x).get("app", {}))
@@ -56,8 +61,22 @@ def create_app(add_routes: bool = True) -> Flask:
                 posixpath.join(path, "index")
             )
             return render_template(
-                page.meta.get('template', 'page.html'), page=page, title=page.meta.get("title", "")
+                page.meta.get("template", "page.html"),
+                page=page,
+                title=page.meta.get("title", ""),
             )
+
+        @freezer.register_generator
+        def list_pages():
+            pages.get("test")
+            # Return a list. (Any iterable type will do.)
+            for page, created in pages._file_cache.values():
+                path = "/" + page.path
+                path = path.replace("/index", "/")
+                if not path.endswith("/"):
+                    path = path + ".html"
+                print(path)
+                yield path
 
         @app.errorhandler(HTTPException)
         def error(e):
@@ -89,8 +108,9 @@ def resolve_app() -> Flask:
 # Scripts
 def freeze():
     app = resolve_app()
-    freezer = Freezer(app)
-    freezer.freeze()
+    print("Freezing app...")
+    app.freezer.freeze()
+    print("Done.")
 
 
 def serve():
