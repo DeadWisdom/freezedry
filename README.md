@@ -11,7 +11,7 @@ Initialize your project, and add the dependency:
     $ poetry init
     ...
     $ poetry add git+https://github.com/deadwisdom/freezedry.git#main
-  
+
 Create two files:
 
     /pages/index.md
@@ -37,6 +37,11 @@ Add app settings to your `pyproject.toml` like:
 
     [app]
     FLATPAGES_EXTENSION = '.moo'
+
+## Error handling
+
+You can add a `/templates/error.html` file which can take an 'error' object, which will be a
+werkzeug `werkzeug.exceptions.HTTPException`.
 
 ## Extend
 
